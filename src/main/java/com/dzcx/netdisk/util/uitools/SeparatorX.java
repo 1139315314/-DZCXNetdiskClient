@@ -1,4 +1,4 @@
-package com.dzcx.netdisk.util;
+package com.dzcx.netdisk.util.uitools;
 
 import javafx.geometry.Insets;
 import javafx.geometry.Orientation;

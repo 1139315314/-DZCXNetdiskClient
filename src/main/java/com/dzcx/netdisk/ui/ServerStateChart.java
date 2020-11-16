@@ -1,7 +1,7 @@
 package com.dzcx.netdisk.ui;
 
-import com.dzcx.netdisk.util.AnchorPaneX;
-import com.dzcx.netdisk.util.BorderX;
+import com.dzcx.netdisk.util.uitools.AnchorPaneX;
+import com.dzcx.netdisk.util.uitools.BorderX;
 import javafx.geometry.Pos;
 import javafx.scene.chart.CategoryAxis;
 import javafx.scene.chart.LineChart;

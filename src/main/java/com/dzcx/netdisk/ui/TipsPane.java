@@ -1,7 +1,6 @@
 package com.dzcx.netdisk.ui;
 
-import com.dzcx.netdisk.Entrance;
-import com.dzcx.netdisk.util.BorderX;
+import com.dzcx.netdisk.util.uitools.BorderX;
 import com.dzcx.netdisk.util.iUtil;
 import javafx.beans.property.SimpleIntegerProperty;
 import javafx.geometry.Insets;
@@ -29,7 +28,7 @@ public class TipsPane extends BorderPane {
 		HBox speedBox = new HBox();
 		Label speedIcon = new Label();
 		speedIcon.setPrefSize(16, 16);
-		iUtil.setBg(speedIcon, "net/imyeyu/netdisk/res/ioList.png", 16, 2, 2);
+		iUtil.setBg(speedIcon, "phoyo/ioList.png", 16, 2, 2);
 		speed = new Label("0 B/s");
 		speed.setFont(font);
 		speed.setPadding(insets);
@@ -43,7 +42,7 @@ public class TipsPane extends BorderPane {
 		tipsItems.setFont(font);
 		items.addListener((obs, oldValue, newValue) -> {
 			if (newValue.intValue() != 0) {
-				tipsItems.setText(newValue.intValue() + rbx.l("mainTipsItems"));
+				tipsItems.setText(newValue.intValue() + "个对象");
 			} else {
 				tipsItems.setText("");
 			}
@@ -52,7 +51,7 @@ public class TipsPane extends BorderPane {
 		tipsSelected.setFont(font);
 		selected.addListener((obs, oldValue, newValue) -> {
 			if (newValue.intValue() != 0) {
-				tipsSelected.setText(newValue.intValue() + rbx.l("mainTipsSelected"));
+				tipsSelected.setText(newValue.intValue() + "个已选择");
 			} else {
 				tipsSelected.setText("");
 			}

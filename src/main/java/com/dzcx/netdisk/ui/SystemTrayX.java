@@ -13,13 +13,13 @@ import java.awt.event.MouseListener;
 import javax.swing.ImageIcon;
 
 import com.dzcx.netdisk.controller.Main;
+import com.dzcx.netdisk.util.GUIImp;
 import javafx.application.Platform;
 import javafx.event.EventHandler;
-import net.imyeyu.netdisk.Entrance;
-import net.imyeyu.netdisk.core.Download;
-import net.imyeyu.netdisk.core.Upload;
-import net.imyeyu.netdisk.dialog.Confirm;
-import net.imyeyu.util.YeyuUtils;
+//import net.imyeyu.netdisk.core.Download;
+//import net.imyeyu.netdisk.core.Upload;
+//import net.imyeyu.netdisk.dialog.Confirm;
+//import net.imyeyu.util.YeyuUtils;
 
 public class SystemTrayX implements ActionListener {
 
@@ -33,23 +33,23 @@ public class SystemTrayX implements ActionListener {
 		this.main = main;
 		
 		PopupMenu menu = new PopupMenu();
-		name = new MenuItem("iNetdisk - 夜雨云盘");
-		show = new MenuItem(rbx.def("hoemScreen"));
+		name = new MenuItem("DZCX Netdisk");
+		show = new MenuItem("打开主界面");
 		show.addActionListener(this);
-		exit = new MenuItem(rbx.def("exit"));
+		exit = new MenuItem("退出");
 		exit.addActionListener(this);
 		menu.add(name);
 		menu.addSeparator();
 		menu.add(show);
 		menu.add(exit);
 
-		ImageIcon img = new ImageIcon(getClass().getResource("/net/imyeyu/netdisk/res/icon.png"));
-		icon = new TrayIcon(img.getImage(), "iNetdisk - 夜雨云盘", menu);
+		ImageIcon img = new ImageIcon(getClass().getResource("photo/icon.png"));
+		icon = new TrayIcon(img.getImage(), "DZCX Netdisk", menu);
 		dbClickEvent();
 		try {
 			tray.add(icon);
 		} catch (AWTException e) {
-			YeyuUtils.gui().exception(e);
+			new GUIImp().exception(e);
 		}
 	}
 	
@@ -82,17 +82,17 @@ public class SystemTrayX implements ActionListener {
 		}
 		if (menu == exit) {
 			Platform.runLater(() -> {
-				if (Download.getListProperty().size() != 0 || Upload.getListProperty().size() != 0) {
-					main.getView().show();
-					Confirm confirm = new Confirm(rbx.def("warn"), rbx.def("exitWhenIOListRunning"), rbx.def("confirm"), "ewarn");
-					confirm.initConfirm(confirm, new EventHandler<javafx.event.ActionEvent>() {
-						public void handle(javafx.event.ActionEvent event) {
-							Platform.exit();
-						}
-					});
-				} else {
-					Platform.exit();
-				}
+//				if (Download.getListProperty().size() != 0 || Upload.getListProperty().size() != 0) {
+//					main.getView().show();
+//					Confirm confirm = new Confirm(rbx.def("warn"), rbx.def("exitWhenIOListRunning"), rbx.def("confirm"), "ewarn");
+//					confirm.initConfirm(confirm, new EventHandler<javafx.event.ActionEvent>() {
+//						public void handle(javafx.event.ActionEvent event) {
+//							Platform.exit();
+//						}
+//					});
+//				} else {
+//					Platform.exit();
+//				}
 			});
 		}
 	}

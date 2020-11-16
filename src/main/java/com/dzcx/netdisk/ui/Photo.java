@@ -1,6 +1,7 @@
 package com.dzcx.netdisk.ui;
 
-import com.dzcx.netdisk.util.BorderX;
+import com.dzcx.netdisk.util.uitools.BorderX;
+import com.dzcx.netdisk.util.uitools.ToolTipsX;
 import javafx.beans.property.SimpleBooleanProperty;
 import javafx.geometry.Rectangle2D;
 import javafx.scene.control.Label;
@@ -9,7 +10,6 @@ import javafx.scene.image.ImageView;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.Border;
 
-import net.imyeyu.util.gui.ToolTipsX;
 
 public class Photo extends AnchorPane {
 

@@ -1,4 +1,4 @@
-package com.dzcx.netdisk.util;
+package com.dzcx.netdisk.util.uitools;
 
 import javafx.scene.control.Tooltip;
 import javafx.scene.text.Font;

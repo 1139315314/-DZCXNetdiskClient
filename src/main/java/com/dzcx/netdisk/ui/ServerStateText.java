@@ -1,6 +1,6 @@
 package com.dzcx.netdisk.ui;
 
-import com.dzcx.netdisk.util.BorderX;
+import com.dzcx.netdisk.util.uitools.BorderX;
 import javafx.geometry.Pos;
 import javafx.scene.control.Label;
 import javafx.scene.layout.HBox;

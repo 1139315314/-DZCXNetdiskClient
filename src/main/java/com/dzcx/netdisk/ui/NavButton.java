@@ -1,6 +1,6 @@
 package com.dzcx.netdisk.ui;
 
-import com.dzcx.netdisk.util.BorderX;
+import com.dzcx.netdisk.util.uitools.BorderX;
 import javafx.scene.control.Button;
 
 

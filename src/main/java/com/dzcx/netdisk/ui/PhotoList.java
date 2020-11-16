@@ -5,11 +5,14 @@ import java.util.Iterator;
 import java.util.LinkedHashMap;
 import java.util.Map;
 
+import com.dzcx.netdisk.request.ImgRequest;
+import com.dzcx.netdisk.util.EncodeImp;
 import com.google.gson.JsonArray;
 import com.google.gson.JsonObject;
 
 import javafx.geometry.Insets;
 import javafx.geometry.Rectangle2D;
+import javafx.scene.control.Alert;
 import javafx.scene.control.Label;
 import javafx.scene.control.ProgressBar;
 import javafx.scene.layout.BorderPane;
@@ -17,10 +20,7 @@ import javafx.scene.layout.FlowPane;
 import javafx.scene.layout.VBox;
 import javafx.scene.text.Font;
 import javafx.scene.text.FontWeight;
-import net.imyeyu.netdisk.dialog.Alert;
-import net.imyeyu.netdisk.request.ImgRequest;
-import net.imyeyu.util.ResourceBundleX;
-import net.imyeyu.util.YeyuUtils;
+//import net.imyeyu.netdisk.dialog.Alert;
 
 public class PhotoList extends VBox {
 
@@ -74,8 +74,8 @@ public class PhotoList extends VBox {
 			// 月份标签
 			monthText = month.get("month").getAsString();
 			if (!monthText.equals("empty")) {
-				if (YeyuUtils.encode().isNumber(month.get("month").getAsString())) {
-					monthLabel = new Label(month.get("month").getAsString() + rbx.l("month"));
+				if (new EncodeImp().isNumber(month.get("month").getAsString())) {
+					monthLabel = new Label(month.get("month").getAsString() + "月");
 				} else {
 					monthLabel = new Label(month.get("month").getAsString());
 				}
@@ -111,7 +111,7 @@ public class PhotoList extends VBox {
 	    			getChildren().remove(pb);
 	    		}
 			} else {
-				new Alert(rbx.def("error"), rbx.def("getFail"));
+				//new Alert(rbx.def("error"), rbx.def("getFail"));
 			}
 	    });
 	    request.start();

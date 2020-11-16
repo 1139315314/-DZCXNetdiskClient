@@ -1,5 +1,6 @@
-package com.dzcx.netdisk.util;
+package com.dzcx.netdisk.util.uitools;
 
+import com.dzcx.netdisk.util.GUI;
 import javafx.geometry.Insets;
 import javafx.scene.layout.Border;
 import javafx.scene.layout.BorderStroke;

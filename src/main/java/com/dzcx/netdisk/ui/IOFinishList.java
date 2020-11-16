@@ -4,6 +4,8 @@ import java.awt.Desktop;
 import java.io.File;
 import java.io.IOException;
 
+import com.dzcx.netdisk.entity.IOHistory;
+import com.dzcx.netdisk.util.FileFormat;
 import javafx.beans.property.SimpleStringProperty;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
@@ -17,9 +19,6 @@ import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.Region;
 import javafx.util.Callback;
-import net.imyeyu.netdisk.bean.IOHistory;
-import net.imyeyu.netdisk.util.FileFormat;
-import net.imyeyu.util.ResourceBundleX;
 
 public class IOFinishList extends ListView<IOHistory> {
 	
@@ -30,7 +29,7 @@ public class IOFinishList extends ListView<IOHistory> {
 	private BorderPane main;
 	private SimpleStringProperty show = new SimpleStringProperty();
 	
-	public IOFinishList(ResourceBundleX rbx) {
+	public IOFinishList() {
 		setPadding(Insets.EMPTY);
 		setStyle("-fx-background-insets: 0");
 		setCellFactory(new Callback<ListView<IOHistory>, ListCell<IOHistory>>() {
@@ -62,7 +61,7 @@ public class IOFinishList extends ListView<IOHistory> {
 							file.setSpacing(6);
 							file.getChildren().addAll(ioIcon, icon, name);
 							
-							view = new Button(rbx.def("openFolder"));
+							view = new Button("打开文件夹");
 							view.setOnAction(event -> {
 								if (item.isLocal()) {
 									try {

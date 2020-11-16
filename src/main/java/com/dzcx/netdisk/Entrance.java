@@ -1,6 +1,8 @@
 package com.dzcx.netdisk;
 
+import com.dzcx.netdisk.controller.Main;
 import com.dzcx.netdisk.entity.MyConfig;
+import javafx.application.Application;
 import org.ini4j.Wini;
 
 import java.io.File;
@@ -13,6 +15,8 @@ public class Entrance {
     public static void main(String[] args) {
         config = getConfig("src/main/resources/iNetdisk.ini");
         System.out.println(config);
+        Application.launch(Main.class, args);
+
     }
 
     // 读取配置文件

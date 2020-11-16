@@ -1,5 +1,7 @@
 package com.dzcx.netdisk.ui;
 
+import com.dzcx.netdisk.entity.FileCell;
+import com.dzcx.netdisk.util.FileFormat;
 import javafx.geometry.Insets;
 import javafx.scene.control.Label;
 import javafx.scene.control.SelectionMode;
@@ -10,18 +12,15 @@ import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.HBox;
 import javafx.util.Callback;
-import net.imyeyu.netdisk.bean.FileCell;
-import net.imyeyu.netdisk.util.FileFormat;
-import net.imyeyu.util.ResourceBundleX;
 
 public class FileListTable extends TableView<FileCell> {
 	
 	private TableColumn<FileCell, String> colName;
 	
-	public FileListTable(ResourceBundleX rbx) {
-		colName = new TableColumn<FileCell, String>(rbx.def("mainFileName"));
-		TableColumn<FileCell, String> colDate = new TableColumn<FileCell, String>(rbx.def("mainFileDate"));
-		TableColumn<FileCell, String> colSize = new TableColumn<FileCell, String>(rbx.def("mainFileSize"));
+	public FileListTable() {
+		colName = new TableColumn<FileCell, String>("文件名称");
+		TableColumn<FileCell, String> colDate = new TableColumn<FileCell, String>("文件日期");
+		TableColumn<FileCell, String> colSize = new TableColumn<FileCell, String>("文件大小");
 		colName.setPrefWidth(450);
 		colDate.setPrefWidth(140);
 		colSize.setPrefWidth(100);
@@ -36,7 +35,7 @@ public class FileListTable extends TableView<FileCell> {
 							HBox box = new HBox();
 							ImageView img;
 							if (item.substring(0, item.indexOf(".")).equals("folder")) {
-								img = new ImageView("net/imyeyu/netdisk/res/folder.png");
+								img = new ImageView("photo/folder.png");
 							} else {
 								img = new ImageView(FileFormat.getImage(item.substring(item.lastIndexOf(".") + 1)));
 							}

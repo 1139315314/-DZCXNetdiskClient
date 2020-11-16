@@ -2,6 +2,11 @@ package com.dzcx.netdisk.ui;
 
 import java.text.DecimalFormat;
 
+import com.dzcx.netdisk.Entrance;
+import com.dzcx.netdisk.entity.PhotoInfo;
+import com.dzcx.netdisk.util.NetworkImp;
+import com.dzcx.netdisk.util.iUtil;
+import com.dzcx.netdisk.util.uitools.ToolTipsX;
 import com.google.gson.JsonObject;
 import com.google.gson.JsonParser;
 
@@ -14,34 +19,27 @@ import javafx.scene.layout.ColumnConstraints;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.RowConstraints;
 import javafx.scene.paint.Color;
-import net.imyeyu.netdisk.Entrance;
-import net.imyeyu.netdisk.bean.PhotoInfo;
-import net.imyeyu.util.ResourceBundleX;
-import net.imyeyu.util.YeyuUtils;
-import net.imyeyu.util.gui.ToolTipsX;
 
 public class PhotoInfoTable extends GridPane {
 	
-	private ResourceBundleX rbx = Entrance.getRb();
-	
 	private String[] labels = {
-		rbx.def("fileName"),
-		rbx.def("pos"),
-		rbx.def("fileSize"),
-		rbx.def("width"),
-		rbx.def("height"),
-		rbx.def("date"),
-		rbx.def("make"),
-		rbx.def("camera"),
-		rbx.def("os"),
-		rbx.def("aperture"),
-		rbx.def("toe"),
-		rbx.def("iso"),
-		rbx.def("focalLength"),
-		rbx.def("lng"),
-		rbx.def("lat"),
-		rbx.def("alt"),
-		rbx.def("photoGPS")
+		"文件名",
+		"文件位置",
+		"文件大小",
+		"宽度",
+		"高度",
+		"日期：",
+		"相机厂商",
+		"相机型号",
+		"系统",
+		"光圈",
+		"曝光时间",
+		"ISO 速度",
+		"焦距",
+		"经度",
+		"维度",
+		"海拔",
+		"地理位置"
 	};
 	private Label[] label = new Label[labels.length];
 	private Label[] data = new Label[labels.length];
@@ -76,7 +74,7 @@ public class PhotoInfoTable extends GridPane {
 		data[i++].setText(info.getName());
 		data[i].setTooltip(new ToolTipsX(info.getPos()));
 		data[i++].setText(info.getPos());
-		data[i++].setText(YeyuUtils.tools().storageFormat(Long.valueOf(info.getSize()), new DecimalFormat("#,###.##")));
+		data[i++].setText(iUtil.storageFormat(Long.valueOf(info.getSize()), new DecimalFormat("#,###.##")));
 		data[i++].setText(info.getWidth());
 		data[i++].setText(info.getHeight());
 		data[i++].setText(info.getDate());
@@ -85,12 +83,12 @@ public class PhotoInfoTable extends GridPane {
 		data[i].setTooltip(new ToolTipsX(info.getOs()));
 		data[i++].setText(info.getOs());
 		data[i++].setText(info.getAperture());
-		data[i++].setText(info.getToe() + rbx.l("second"));
+		data[i++].setText(info.getToe() + "秒");
 		data[i++].setText(info.getIso());
-		data[i++].setText(info.getFocalLength() + rbx.l("millimeter"));
+		data[i++].setText(info.getFocalLength() + "毫米");
 		data[i++].setText(info.getLng());
 		data[i++].setText(info.getLat());
-		data[i++].setText(info.getAlt().replaceAll("metres", rbx.l("meters")));
+		data[i++].setText(info.getAlt().replaceAll("metres", "米"));
 		data[i++].setText("");
 		
 		// 根据经纬度获取地理位置
@@ -133,7 +131,7 @@ class LocationService extends Service<String> {
 		return new Task<String>() {
 			protected String call() throws Exception {
 				String par = "ak=wWYw0yCb8ntXmSgTxTx40vKR&callback=renderReverse&location=" + lat + "," + lng + "&output=json&pois=1";
-				return YeyuUtils.network().doGet("http://api.map.baidu.com/geocoder/v2/", par);
+				return new NetworkImp().doGet("http://api.map.baidu.com/geocoder/v2/", par);
 			}
 		};
 	}

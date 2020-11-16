@@ -1,9 +1,9 @@
-package com.dzcx.netdisk.util;
+package com.dzcx.netdisk.util.uitools;
 
+import com.dzcx.netdisk.util.GUI;
 import javafx.concurrent.Service;
 import javafx.concurrent.Task;
 import javafx.scene.control.Label;
-import net.imyeyu.util.interfaces.GUI;
 
 public class TipsX extends Service<String> {
 	

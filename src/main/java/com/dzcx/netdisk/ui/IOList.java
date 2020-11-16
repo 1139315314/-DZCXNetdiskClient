@@ -5,6 +5,8 @@ import java.text.DecimalFormat;
 import com.dzcx.netdisk.entity.DownloadFile;
 import com.dzcx.netdisk.entity.IOCell;
 import com.dzcx.netdisk.entity.UploadFile;
+import com.dzcx.netdisk.util.FileFormat;
+import com.dzcx.netdisk.util.iUtil;
 import javafx.beans.property.SimpleListProperty;
 import javafx.beans.property.SimpleStringProperty;
 import javafx.collections.ObservableList;
@@ -26,10 +28,6 @@ import javafx.scene.layout.HBox;
 import javafx.scene.layout.Region;
 import javafx.util.Callback;
 
-import net.imyeyu.netdisk.core.Download;
-import net.imyeyu.netdisk.core.Upload;
-import net.imyeyu.netdisk.util.FileFormat;
-import net.imyeyu.util.YeyuUtils;
 
 public class IOList extends ListView<IOCell> {
 	
@@ -93,22 +91,22 @@ public class IOList extends ListView<IOCell> {
 							AnchorPane.setTopAnchor(cancel, 6d);
 							AnchorPane.setRightAnchor(cancel, 4d);
 							cancel.setOnAction(event -> {
-								SimpleListProperty<UploadFile> uplaod = Upload.getListProperty();
-								for (int i = 0; i < uplaod.size(); i++) {
-									if (item.getName().equals(uplaod.get(i).getName())) {
-										rootList.remove(i);
-										Upload.getListProperty().remove(i);
-										return;
-									}
-								}
-								SimpleListProperty<DownloadFile> download = Download.getListProperty();
-								for (int i = 0; i < download.size(); i++) {
-									if (item.getName().equals(download.get(i).getName())) {
-										rootList.remove(i);
-										Download.getListProperty().remove(i);
-										return;
-									}
-								}
+//								SimpleListProperty<UploadFile> uplaod = Upload.getListProperty();
+//								for (int i = 0; i < uplaod.size(); i++) {
+//									if (item.getName().equals(uplaod.get(i).getName())) {
+//										rootList.remove(i);
+//										Upload.getListProperty().remove(i);
+//										return;
+//									}
+//								}
+//								SimpleListProperty<DownloadFile> download = Download.getListProperty();
+//								for (int i = 0; i < download.size(); i++) {
+//									if (item.getName().equals(download.get(i).getName())) {
+//										rootList.remove(i);
+//										Download.getListProperty().remove(i);
+//										return;
+//									}
+//								}
 							});
 							
 							main.getChildren().addAll(pb, file, size);
@@ -127,6 +125,6 @@ public class IOList extends ListView<IOCell> {
 	}
 	
 	private String formatSize(double size) {
-		return YeyuUtils.tools().storageFormat(size, format);
+		return iUtil.storageFormat(size, format);
 	}
 }
