@@ -20,6 +20,10 @@ import javafx.scene.layout.HBox;
 import javafx.scene.layout.Region;
 import javafx.util.Callback;
 
+
+/**
+ *  历史传输记录
+ */
 public class IOFinishList extends ListView<IOHistory> {
 	
 	private HBox file;

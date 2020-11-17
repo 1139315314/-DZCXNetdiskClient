@@ -14,7 +14,7 @@ import java.text.DecimalFormat;
 import com.dzcx.netdisk.Entrance;
 import com.dzcx.netdisk.entity.MyConfig;
 import com.dzcx.netdisk.entity.Request;
-import com.dzcx.netdisk.util.ToolsImp;
+import com.dzcx.netdisk.util.implement.ToolsImp;
 import com.google.gson.Gson;
 
 import javafx.concurrent.Service;

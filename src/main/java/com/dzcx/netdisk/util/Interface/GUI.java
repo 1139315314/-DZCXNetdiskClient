@@ -1,4 +1,4 @@
-package com.dzcx.netdisk.util;
+package com.dzcx.netdisk.util.Interface;
 
 import javafx.scene.Node;
 import javafx.scene.control.Label;

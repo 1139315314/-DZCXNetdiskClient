@@ -1,6 +1,6 @@
 package com.dzcx.netdisk.util.uitools;
 
-import com.dzcx.netdisk.util.GUI;
+import com.dzcx.netdisk.util.Interface.GUI;
 import javafx.concurrent.Service;
 import javafx.concurrent.Task;
 import javafx.scene.control.Label;

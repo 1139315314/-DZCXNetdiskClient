@@ -1,4 +1,4 @@
-package com.dzcx.netdisk.util;
+package com.dzcx.netdisk.util.implement;
 
 import java.awt.Toolkit;
 import java.awt.datatransfer.DataFlavor;
@@ -18,6 +18,7 @@ import java.util.Map;
 import java.util.Map.Entry;
 import java.util.TreeMap;
 
+import com.dzcx.netdisk.util.Interface.Tools;
 import com.sun.management.OperatingSystemMXBean;
 
 

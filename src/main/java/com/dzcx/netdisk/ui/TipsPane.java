@@ -15,9 +15,11 @@ import javafx.scene.text.Font;
 
 public class TipsPane extends BorderPane {
 
-	
+	// 当前文件夹和文件的个数
 	private SimpleIntegerProperty items = new SimpleIntegerProperty();
+	// 选择文件夹和文件的个数
 	private SimpleIntegerProperty selected = new SimpleIntegerProperty();
+	// 速度和提示
 	private Label speed, tips;
 
 	public TipsPane() {

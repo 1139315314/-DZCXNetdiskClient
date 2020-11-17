@@ -2,9 +2,8 @@ package com.dzcx.netdisk.ui;
 
 import java.text.DecimalFormat;
 
-import com.dzcx.netdisk.Entrance;
 import com.dzcx.netdisk.entity.PhotoInfo;
-import com.dzcx.netdisk.util.NetworkImp;
+import com.dzcx.netdisk.util.implement.NetworkImp;
 import com.dzcx.netdisk.util.iUtil;
 import com.dzcx.netdisk.util.uitools.ToolTipsX;
 import com.google.gson.JsonObject;
@@ -20,6 +19,9 @@ import javafx.scene.layout.GridPane;
 import javafx.scene.layout.RowConstraints;
 import javafx.scene.paint.Color;
 
+/**
+ *   专门自己存放图片的布局
+ */
 public class PhotoInfoTable extends GridPane {
 	
 	private String[] labels = {

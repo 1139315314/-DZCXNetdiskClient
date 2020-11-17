@@ -1,4 +1,6 @@
-package com.dzcx.netdisk.util;
+package com.dzcx.netdisk.util.implement;
+
+import com.dzcx.netdisk.util.Interface.Encode;
 
 import java.io.IOException;
 import java.io.UnsupportedEncodingException;

@@ -1,8 +1,9 @@
-package com.dzcx.netdisk.util;
+package com.dzcx.netdisk.util.implement;
 
 import java.io.PrintWriter;
 import java.io.StringWriter;
 
+import com.dzcx.netdisk.util.Interface.GUI;
 import com.dzcx.netdisk.util.entity.Debug;
 import com.dzcx.netdisk.util.entity.Error;
 import com.dzcx.netdisk.util.uitools.TipsX;

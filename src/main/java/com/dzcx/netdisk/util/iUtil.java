@@ -1,5 +1,6 @@
 package com.dzcx.netdisk.util;
 
+import com.dzcx.netdisk.util.implement.EncodeImp;
 import javafx.scene.Node;
 
 import java.text.DecimalFormat;

@@ -10,7 +10,9 @@ import javafx.scene.image.ImageView;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.Border;
 
-
+/**
+ * 　图片的实体类
+ */
 public class Photo extends AnchorPane {
 
 	private SimpleBooleanProperty isSelect = new SimpleBooleanProperty(false);

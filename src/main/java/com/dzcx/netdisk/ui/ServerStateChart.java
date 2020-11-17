@@ -69,7 +69,7 @@ public class ServerStateChart extends HBox {
 		setBorder(new BorderX("#B5B5B5", BorderX.SOLID, 1).top());
 		setAlignment(Pos.CENTER_RIGHT);
 		setPrefHeight(height);
-		setSpacing(2);
+		setSpacing(7);
 		getChildren().addAll(label, canvas);
 	}
 

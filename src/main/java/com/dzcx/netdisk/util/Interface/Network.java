@@ -1,4 +1,4 @@
-package com.dzcx.netdisk.util;
+package com.dzcx.netdisk.util.Interface;
 
 import com.dzcx.netdisk.util.entity.HTTPInfo;
 

@@ -3,7 +3,9 @@ package com.dzcx.netdisk.ui;
 import com.dzcx.netdisk.util.uitools.BorderX;
 import javafx.scene.control.Button;
 
-
+/**
+ *  自己封装的按钮
+ */
 public class NavButton extends Button {
 	
 	private void init(String text, double width, double height) {

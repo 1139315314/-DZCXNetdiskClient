@@ -1,10 +1,10 @@
-package com.dzcx.netdisk.util;
+package com.dzcx.netdisk.util.Interface;
 
 /**
  * <p>编码接口
  * <p>通常是一些字符编码操作或判定
  * 
- * @author Yeyu
+ * @author 屎兄
  *
  */
 public interface Encode {
@@ -22,7 +22,7 @@ public interface Encode {
 
 	/**
 	 * <p>编译字符串所有字符为 Unicode 编码
-	 * <p>示例: enUnicodeAll("yeyu");
+	 * <p>示例: enUnicodeAll("屎兄");
 	 * 
 	 * @param data 编译字符串
 	 * @return     编译结果
@@ -31,7 +31,7 @@ public interface Encode {
 	
 	/**
 	 * <p>编译字符串非半角字符为 Unicode 编码
-	 * <p>示例: enUnicode("夜雨yeyu");
+	 * <p>示例: enUnicode("屎兄");
 	 * 
 	 * @param data 编译字符串
 	 * @return     编译结果
@@ -76,7 +76,7 @@ public interface Encode {
 	
 	/**
 	 * <p>判断字符串是否存在中文
-	 * <p>示例: hasChinese("夜雨yeyu");
+	 * <p>示例: hasChinese("屎兄");
 	 * 
 	 * @param data  字符串
 	 * @return true 为存在，否则不存在

@@ -29,6 +29,9 @@ import javafx.scene.layout.Region;
 import javafx.util.Callback;
 
 
+/**
+ *  正在传输的记录
+ */
 public class IOList extends ListView<IOCell> {
 	
 	private DecimalFormat format = new DecimalFormat("#,###");

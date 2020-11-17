@@ -13,6 +13,10 @@ import javafx.scene.image.ImageView;
 import javafx.scene.layout.HBox;
 import javafx.util.Callback;
 
+
+/**
+ *  文件列表，展示文件夹和文件的
+ */
 public class FileListTable extends TableView<FileCell> {
 	
 	private TableColumn<FileCell, String> colName;
@@ -26,6 +30,7 @@ public class FileListTable extends TableView<FileCell> {
 		colSize.setPrefWidth(100);
 
 		colName.setCellValueFactory(new PropertyValueFactory<FileCell, String>("name"));
+		// 更新数据的时候给对应的图标显示
 		colName.setCellFactory(new Callback<TableColumn<FileCell, String>, TableCell<FileCell, String>>() {
 			public TableCell<FileCell, String> call(TableColumn<FileCell, String> param) {
 				TableCell<FileCell, String> cell = new TableCell<FileCell, String>(){

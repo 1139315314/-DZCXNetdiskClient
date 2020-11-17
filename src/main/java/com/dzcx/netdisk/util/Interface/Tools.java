@@ -1,4 +1,4 @@
-package com.dzcx.netdisk.util;
+package com.dzcx.netdisk.util.Interface;
 
 import java.io.File;
 import java.text.DecimalFormat;

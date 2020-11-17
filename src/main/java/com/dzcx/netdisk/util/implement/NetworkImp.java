@@ -1,4 +1,4 @@
-package com.dzcx.netdisk.util;
+package com.dzcx.netdisk.util.implement;
 
 import java.awt.Desktop;
 import java.io.BufferedReader;
@@ -30,6 +30,7 @@ import javax.net.ssl.SSLContext;
 import javax.net.ssl.TrustManager;
 import javax.net.ssl.X509TrustManager;
 
+import com.dzcx.netdisk.util.Interface.Network;
 import com.dzcx.netdisk.util.entity.HTTPInfo;
 
 public class NetworkImp implements Network {

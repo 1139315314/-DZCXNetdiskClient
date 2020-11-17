@@ -31,7 +31,7 @@ import javax.swing.LayoutStyle.ComponentPlacement;
 import javax.swing.border.EmptyBorder;
 import javax.swing.border.LineBorder;
 
-import com.dzcx.netdisk.util.NetworkImp;
+import com.dzcx.netdisk.util.implement.NetworkImp;
 import com.sun.management.OperatingSystemMXBean;
 
 

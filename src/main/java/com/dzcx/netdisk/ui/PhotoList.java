@@ -6,13 +6,12 @@ import java.util.LinkedHashMap;
 import java.util.Map;
 
 import com.dzcx.netdisk.request.ImgRequest;
-import com.dzcx.netdisk.util.EncodeImp;
+import com.dzcx.netdisk.util.implement.EncodeImp;
 import com.google.gson.JsonArray;
 import com.google.gson.JsonObject;
 
 import javafx.geometry.Insets;
 import javafx.geometry.Rectangle2D;
-import javafx.scene.control.Alert;
 import javafx.scene.control.Label;
 import javafx.scene.control.ProgressBar;
 import javafx.scene.layout.BorderPane;

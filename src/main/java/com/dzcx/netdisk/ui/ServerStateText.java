@@ -4,6 +4,7 @@ import com.dzcx.netdisk.util.uitools.BorderX;
 import javafx.geometry.Pos;
 import javafx.scene.control.Label;
 import javafx.scene.layout.HBox;
+import javafx.scene.text.Font;
 
 public class ServerStateText extends HBox {
 
@@ -13,6 +14,7 @@ public class ServerStateText extends HBox {
 		Label label = new Label(labelText);
 		value = new Label();
 		value.setPrefSize(width, height);
+		value.setFont(new Font(13));
 
 		setAlignment(Pos.CENTER_RIGHT);
 		setSpacing(2);

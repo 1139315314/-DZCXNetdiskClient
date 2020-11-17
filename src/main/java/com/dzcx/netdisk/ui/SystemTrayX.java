@@ -13,9 +13,8 @@ import java.awt.event.MouseListener;
 import javax.swing.ImageIcon;
 
 import com.dzcx.netdisk.controller.Main;
-import com.dzcx.netdisk.util.GUIImp;
+import com.dzcx.netdisk.util.implement.GUIImp;
 import javafx.application.Platform;
-import javafx.event.EventHandler;
 //import net.imyeyu.netdisk.core.Download;
 //import net.imyeyu.netdisk.core.Upload;
 //import net.imyeyu.netdisk.dialog.Confirm;
@@ -43,7 +42,7 @@ public class SystemTrayX implements ActionListener {
 		menu.add(show);
 		menu.add(exit);
 
-		ImageIcon img = new ImageIcon(getClass().getResource("photo/icon.png"));
+		ImageIcon img = new ImageIcon(getClass().getResource("photo/icon1.png"));
 		icon = new TrayIcon(img.getImage(), "DZCX Netdisk", menu);
 		dbClickEvent();
 		try {
