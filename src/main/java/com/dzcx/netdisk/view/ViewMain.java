@@ -6,6 +6,7 @@ import com.dzcx.netdisk.ui.*;
 import com.dzcx.netdisk.util.uitools.BorderX;
 import com.dzcx.netdisk.util.uitools.SeparatorX;
 import com.dzcx.netdisk.util.iUtil;
+import javafx.event.EventHandler;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.scene.Scene;
@@ -21,18 +22,21 @@ import javafx.scene.image.ImageView;
 import javafx.scene.input.KeyCode;
 import javafx.scene.input.KeyCodeCombination;
 import javafx.scene.input.KeyCombination;
+import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.FlowPane;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
+import javafx.stage.StageStyle;
 
 
 public class ViewMain extends Stage {
 
 	
 	private VBox navBtns;
-	private Button open, propertie, sync, upload, download, zip, unzip, newFolder, rename, move, copy, delete, ioList, setting, photo, publicFile, prev, next, parent, refresh, root, toPublic, search;
+	private Button exit, open, propertie, sync, upload, download, zip, unzip, newFolder, rename, move, copy, delete,
+			ioList, setting, photo, publicFile, prev, next, parent, refresh, root, toPublic, search;
 	private TipsPane tipsPane;
 	private MenuItem mOpen, mRefresh, mNewFolder, mNewText, mDownload, mZip, mUnzip, mMove, mCopy, mRename, mDelete, mProperties;
 	private TextField path, searchField;
@@ -41,8 +45,15 @@ public class ViewMain extends Stage {
 	private FileListTable fileList;
 	private ServerStateText disk;
 	private ServerStateChart cpu, memory, netSpeed;
+
+	/////
+	double c;
+	double d;
 	
 	public ViewMain() {
+		Stage stage = this;
+
+		this.initStyle(StageStyle.UNDECORATED);
 		BorderPane topPane = new BorderPane();
 		// 文件控制面板
 		FlowPane ctrlLeft = new FlowPane();
@@ -80,16 +91,46 @@ public class ViewMain extends Stage {
 		ioList = new Button("传输列表");
 		iUtil.setBg(ioList, "photo/ioList.png", 16, 5, 5);
 		setting = new Button("设置");
-		settingBtn.addAll(ioList, setting);
+		exit = new Button("关闭");
+		settingBtn.addAll(ioList, setting, exit);
 		ctrlRight.setPrefWidth(120);
 		ctrlRight.setAlignment(Pos.CENTER);
 		ctrlRight.getChildren().add(settingBtn);
 
-		topPane.setPadding(new Insets(0, 16, 0, 16));
+		topPane.setPadding(new Insets(0, 30, 0, 16));
 		topPane.setBorder(new BorderX("#B5B5B5", BorderX.SOLID, 1).vertical());
 		topPane.setLeft(ctrlLeft);
 		topPane.setCenter(ctrlCenter);
 		topPane.setRight(ctrlRight);
+
+
+		topPane.setOnMousePressed(new EventHandler<MouseEvent>() {
+
+			@Override
+			public void handle(MouseEvent event) {
+				c = event.getScreenX() - stage.getX();
+				d = event.getScreenY() - stage.getY();
+				System.out.println("get click !" + c + " and " + d);
+			}
+		});
+		topPane.setOnMouseDragged(new EventHandler<MouseEvent>() {
+			//只要是拖拽（按住移动）就反应
+			@Override
+			public void handle(MouseEvent event) {
+				stage.setX(event.getScreenX() - c);
+				stage.setY(event.getScreenY() - d);
+				System.out.println((event.getScreenX() - c) + "=====" + (event.getScreenY() - d));
+
+			}
+		});
+
+		exit.setOnMouseClicked(new EventHandler<MouseEvent>() {
+			@Override
+			public void handle(MouseEvent event) {
+				System.exit(0);
+			}
+		});
+
 		
 		BorderPane leftPane = new BorderPane();
 		// 左侧导航
@@ -205,6 +246,10 @@ public class ViewMain extends Stage {
 		main.setTop(topPane);
 		main.setLeft(leftPane);
 		main.setCenter(filePane);
+
+//		VBox total = new VBox();
+//		total.getChildren().addAll(top,main);
+
 		// 主窗体
 		Scene scene = new Scene(main);
 		scene.getStylesheets().add(this.getClass().getResource("/css/serverState.css").toExternalForm());
@@ -216,6 +261,7 @@ public class ViewMain extends Stage {
 		setHeight(520);
 		setScene(scene);
 		show();
+
 		
 		fileList.requestFocus();
 	}
@@ -298,6 +344,10 @@ public class ViewMain extends Stage {
 
 	public Button getNext() {
 		return next;
+	}
+
+	public Button getExit() {
+		return exit;
 	}
 
 	public Button getParent() {
