@@ -2,6 +2,10 @@ package com.dzcx.netdisk.entity;
 
 public class MyConfig {
 
+    private String dlLocation;
+
+    private String cache;
+
     private String defaultUploadFolder;
 
     private Boolean openIOList;
@@ -72,6 +76,23 @@ public class MyConfig {
                 ", portDownload=" + portDownload +
                 ", portHTTP=" + portHTTP +
                 '}';
+    }
+
+
+    public String getDlLocation() {
+        return dlLocation;
+    }
+
+    public void setDlLocation(String dlLocation) {
+        this.dlLocation = dlLocation;
+    }
+
+    public String getCache() {
+        return cache;
+    }
+
+    public void setCache(String cache) {
+        this.cache = cache;
     }
 
     public String getDefaultUploadFolder() {

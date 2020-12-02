@@ -119,8 +119,7 @@ public class ViewMain extends Stage {
 			public void handle(MouseEvent event) {
 				stage.setX(event.getScreenX() - c);
 				stage.setY(event.getScreenY() - d);
-				System.out.println((event.getScreenX() - c) + "=====" + (event.getScreenY() - d));
-
+				//System.out.println((event.getScreenX() - c) + "=====" + (event.getScreenY() - d));
 			}
 		});
 
@@ -135,9 +134,9 @@ public class ViewMain extends Stage {
 		BorderPane leftPane = new BorderPane();
 		// 左侧导航
 		navBtns = new VBox();
-		photo = new NavButton("图片管理器");
+		//photo = new NavButton("图片管理器");
 		publicFile = new NavButton("公开外链");
-		navBtns.getChildren().addAll(photo, publicFile);
+		navBtns.getChildren().addAll(publicFile);
 		// 服务器状态面板
 		VBox states = new VBox();
 		Label server = new Label("服务器的状态", new ImageView("photo/state.png"));

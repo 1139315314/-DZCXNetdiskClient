@@ -27,6 +27,8 @@ public class Entrance {
         } catch (IOException e) {
             e.printStackTrace();
         }
+        String dlLocation = ini.get("dev","dlLocation");
+        String cache = ini.get("dev","cache");
         String defaultUploadFolder = ini.get("dev","defaultUploadFolder");
         Boolean openIOList = Boolean.valueOf(ini.get("dev","openIOList"));
         Boolean sound = Boolean.valueOf(ini.get("dev","sound"));
@@ -46,7 +48,8 @@ public class Entrance {
 
         MyConfig config = new MyConfig(defaultUploadFolder, openIOList, sound, exitOnClose, width, height, fontSize,
                 fontFamily, volume, ip, portPublic, portState, portUpload, portDownload, portHTTP);
-
+        config.setDlLocation(dlLocation);
+        config.setCache(cache);
         return config;
     }
 
