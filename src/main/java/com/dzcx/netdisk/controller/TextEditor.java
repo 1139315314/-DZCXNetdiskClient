@@ -7,6 +7,7 @@ import java.util.Map;
 import com.dzcx.netdisk.Entrance;
 import com.dzcx.netdisk.entity.MyConfig;
 import com.dzcx.netdisk.request.PublicRequest;
+import com.dzcx.netdisk.request.TextRequest;
 import com.dzcx.netdisk.view.ViewTextEditor;
 import com.google.gson.Gson;
 
