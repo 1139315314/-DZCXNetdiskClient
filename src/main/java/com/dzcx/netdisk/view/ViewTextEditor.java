@@ -1,5 +1,7 @@
 package com.dzcx.netdisk.view;
 
+import com.dzcx.netdisk.Entrance;
+import com.dzcx.netdisk.controller.Main;
 import com.dzcx.netdisk.util.uitools.BorderX;
 import javafx.geometry.Insets;
 import javafx.scene.Scene;
@@ -19,6 +21,8 @@ import javafx.scene.layout.Background;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.HBox;
 import javafx.stage.Stage;
+
+import java.io.File;
 
 public class ViewTextEditor extends Stage {
 	
@@ -120,7 +124,8 @@ public class ViewTextEditor extends Stage {
 		main.setBottom(tipsBox);
 		
 		Scene scene = new Scene(main);
-		scene.getStylesheets().add(this.getClass().getResource("css/textEditor.css").toExternalForm());
+		scene.getStylesheets().add(this.getClass().getResource( "/css/textEditor.css").toExternalForm());
+
 		setScene(scene);
 		getIcons().add(new Image("photo/textEditor.png"));
 		setTitle("文本编辑器 -" + path);

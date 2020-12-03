@@ -5,9 +5,11 @@ import java.util.HashMap;
 import java.util.Map;
 
 import com.dzcx.netdisk.Entrance;
+import com.dzcx.netdisk.dialog.Confirm;
 import com.dzcx.netdisk.entity.MyConfig;
 import com.dzcx.netdisk.request.PublicRequest;
 import com.dzcx.netdisk.request.TextRequest;
+import com.dzcx.netdisk.util.implement.IOImp;
 import com.dzcx.netdisk.view.ViewTextEditor;
 import com.google.gson.Gson;
 
@@ -15,10 +17,6 @@ import javafx.beans.property.SimpleBooleanProperty;
 import javafx.scene.control.MenuItem;
 import javafx.scene.text.Font;
 import javafx.stage.DirectoryChooser;
-import net.imyeyu.netdisk.dialog.Confirm;
-import net.imyeyu.netdisk.request.TextRequest;
-import net.imyeyu.util.Config;
-import net.imyeyu.util.YeyuUtils;
 
 public class TextEditor extends ViewTextEditor {
 
@@ -33,7 +31,7 @@ public class TextEditor extends ViewTextEditor {
 		super(path);
 		this.path = path;
 		fontSize = Integer.valueOf(config.getFontSize());
-		fontFamily = config.getFontFamily().toString();
+		fontFamily = config.getFontFamily();
 		getLine().setFont(Font.font(fontFamily, fontSize));
 		getTextArea().setFont(Font.font(fontFamily, fontSize));
 		
@@ -184,7 +182,7 @@ public class TextEditor extends ViewTextEditor {
 	 * 
 	 */
 	private void setCache(String path) {
-		YeyuUtils.io().stringToFile(new File(path), getTextArea().getText());
+		new IOImp().stringToFile(new File(path), getTextArea().getText());
 	}
 	
 	/**
@@ -213,15 +211,20 @@ public class TextEditor extends ViewTextEditor {
 	}
 	
 	/**
-	 * 获取数据
+	 * 获取文本数据
 	 * 
 	 */
 	private void getData() {
+		// 保存文本的变量
 		StringBuffer sb = new StringBuffer();
+		// 发送获取文本的请求
 		TextRequest request = new TextRequest("getText", path);
+		// 发送请求之后，监听服务器发送过来的文本数据，用string来保存起来
 		request.messageProperty().addListener((obs, oldValue, newValue) -> {
-			if (newValue != null) sb.append(newValue + "\r\n");
+			if (newValue != null)
+				sb.append(newValue + "\r\n");
 		});
+		// 监听value的属性，当收到了finsh信号之后，设置文本内容和文本行号
 		request.valueProperty().addListener((obs, oldValue, newValue) -> {
 			if (newValue.equals("finish")) {
 				if (4 < sb.length()) {
@@ -229,7 +232,9 @@ public class TextEditor extends ViewTextEditor {
 				} else {
 					getTextArea().setText(sb.toString());
 				}
+				// 先保存下来目前所有的文本
 				oldData = getTextArea().getText();
+				// 读取完文本数据之后设置行号
 				setLines("");
 			}
 		});

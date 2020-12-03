@@ -72,9 +72,11 @@ public class ImgRequest extends Service<Image> {
 					return getImg();
 				}
 				if (socket.isConnected()) {
+					// 封装请求
 					Request request = new Request();
 					request.setKey(key);
 					request.setValue(value);
+					// 向服务器发送请求
 					os = socket.getOutputStream();
 					os.write((new Gson().toJson(request) + "\r\n").getBytes("UTF-8"));
 					// 获取文件大小

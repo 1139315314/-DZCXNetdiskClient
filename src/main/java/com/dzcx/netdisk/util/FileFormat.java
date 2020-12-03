@@ -151,6 +151,6 @@ public class FileFormat {
 				icon = "unknown";
 				break;
 		}
-		return new Image("net/imyeyu/netdisk/res/" + icon + ".png");
+		return new Image("photo/" + icon + ".png");
 	}
 }

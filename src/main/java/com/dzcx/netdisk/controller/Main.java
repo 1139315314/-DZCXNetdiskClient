@@ -31,6 +31,9 @@ import com.dzcx.netdisk.ui.SystemTrayX;
 import com.dzcx.netdisk.util.FileFormat;
 import com.dzcx.netdisk.util.Interface.Tools;
 import com.dzcx.netdisk.util.iUtil;
+import com.dzcx.netdisk.util.implement.EncodeImp;
+import com.dzcx.netdisk.util.implement.GUIImp;
+import com.dzcx.netdisk.util.implement.NetworkImp;
 import com.dzcx.netdisk.util.implement.ToolsImp;
 import com.dzcx.netdisk.util.uitools.TipsX;
 import com.dzcx.netdisk.view.ViewMain;
@@ -119,10 +122,16 @@ public class Main extends Application {
 		// 传输速度的监听
 		netSpeed();
 
-		// 双击文件列表
+		// 双击文件列表，然后判断双击的是文件夹还是文件来进行对应的操作
 		fileList.setOnMouseClicked(event -> {
 			if (event.getButton().equals(MouseButton.PRIMARY) && event.getClickCount() == 2)
 				open();
+		});
+
+		// 根目录
+		view.getRoot().setOnAction(event -> {
+			view.getPath().setText("\\");
+			getFileList(view.getPath().getText());
 		});
 
 
@@ -134,35 +143,48 @@ public class Main extends Application {
 	 *
 	 */
 	private void open() {
+		// 获取所选中的项目
 		FileCell selected = fileList.getSelectionModel().getSelectedItem();
 		if (selected != null) {
+			// 获取名字
 			String selectedItem = selected.getName();
+			// 获取文件的类型
 			String format = selectedItem.substring(0, selectedItem.indexOf("."));
+			// 获取文件的名称
 			final String fileName = selectedItem.substring(selectedItem.indexOf(".") + 1);
-			if (format.equals("folder")) { // 文件夹
+			// 如果文件类型是文件夹
+			if (format.equals("folder")) {
+				// 重新获取对应的文件夹路径
 				String path = view.getPath().getText() + fileName + File.separator;
+				// 把前一次的文件路径给保存起来
 				prevStack.push(view.getPath().getText());
+				// 刷新文件列表
 				getFileList(path);
 				return;
 			}
+			// 如果当前的路劲不包含公开外链
 			if (view.getPath().getText().indexOf(server.get("publicFile")) == -1) { // 非公开外链
-				if (FileFormat.isTextFile(format)) { // 文本预览
+				// 文本预览
+				if (FileFormat.isTextFile(format)) {
+					// 拼接文件的路劲
 					TextEditor editor = new TextEditor(view.getPath().getText() + fileName);
 					editor.getIsSave().addListener(event -> getFileList(view.getPath().getText()));
 					return;
 				}
-				if (FileFormat.isImg(format)) { // 图片预览
+				// 图片预览
+				if (FileFormat.isImg(format)) {
 					new Img(view.getPath().getText() + fileName);
 					return;
 				}
-				if (FileFormat.isMP4(format)) { // 视频播放
+				// 视频播放
+				if (FileFormat.isMP4(format)) {
 					PublicRequest request = new PublicRequest("getMP4Info", view.getPath().getText() + fileName);
-					YeyuUtils.gui().tips(tips, "正在获取视频信息...", 3000, TipsX.WARNING);
+					new GUIImp().tips(tips, "正在获取视频信息...", 3000, TipsX.WARNING);
 					request.messageProperty().addListener((tmp, o, n) -> {
 						JsonObject jo = (new JsonParser()).parse(n).getAsJsonObject();
 						VideoInfo video = new VideoInfo();
 						video.setName(fileName);
-						video.setUrl(view.getPath().getText() + fileName, config.get("ip").toString(), config.get("portHTTP").toString());
+						video.setUrl(view.getPath().getText() + fileName, config.getIp(), String.valueOf(config.getPortHTTP()));
 						video.setWidth(jo.get("width").getAsDouble());
 						video.setHeight(jo.get("height").getAsDouble());
 						video.setDeg(jo.get("deg").getAsInt());
@@ -175,14 +197,14 @@ public class Main extends Application {
 					try {
 						String path = view.getPath().getText() + selectedItem.substring(selectedItem.indexOf(".") + 1);
 						path = path.replaceAll("\\\\", "/");
-						path = YeyuUtils.encode().enURL(path).substring(1);
-						String address = "http://" + config.getString("ip") + ":" + config.getString("portHTTP") + path;
-						YeyuUtils.network().openURIInBrowser(new URL(address).toURI());
+						path = new EncodeImp().enURL(path).substring(1);
+						String address = "http://" + config.getIp() + ":" + config.getPortHTTP() + path;
+						new NetworkImp().openURIInBrowser(new URL(address).toURI());
 					} catch (MalformedURLException | URISyntaxException e) {
 						e.printStackTrace();
 					}
 				}
-				YeyuUtils.gui().tips(tips, rbx.r("notSupportOpen") + format + rbx.l("file"), 3000, TipsX.WARNING);
+				new GUIImp().tips(tips, "不支持预览" + format + "文件", 3000, TipsX.WARNING);
 			}
 		}
 	}
