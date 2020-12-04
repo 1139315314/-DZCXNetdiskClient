@@ -176,7 +176,7 @@ public class Main extends Application {
 					new Img(view.getPath().getText() + fileName);
 					return;
 				}
-				// 视频播放
+				// 视频播放Tomcat
 				if (FileFormat.isMP4(format)) {
 					PublicRequest request = new PublicRequest("getMP4Info", view.getPath().getText() + fileName);
 					new GUIImp().tips(tips, "正在获取视频信息...", 3000, TipsX.WARNING);
