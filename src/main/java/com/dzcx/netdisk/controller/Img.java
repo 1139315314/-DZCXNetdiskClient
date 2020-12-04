@@ -42,7 +42,9 @@ public class Img extends ViewImg {
 		// 释放图像
 		getMain().setOnMouseReleased(event -> {
 			getMain().setCursor(Cursor.DEFAULT);
-			if (cx == event.getScreenX() && cy == event.getScreenY()) close();
+			// 当用户释放鼠标的时候，图片坐标没有改变过，则视为用户想要关闭图片
+			if (cx == event.getScreenX() && cy == event.getScreenY())
+				close();
 		});
 		// 滚轮事件
 		getMain().addEventFilter(ScrollEvent.SCROLL, event -> {
@@ -64,22 +66,27 @@ public class Img extends ViewImg {
 				}
 			}
 		});
-		// 获取图片
+		// 封装获取图片的请求
 		ImgRequest request = new ImgRequest("getImg", path, true);
+		// 把进度条的属性和请求的进度绑定在一起
 		getPB().progressProperty().bind(request.progressProperty());
+		// 把图片容器中的文本消息和请求的消息绑定在一起
 		getOnload().textProperty().bind(request.messageProperty());
+		// 监听请求的value属性，当收到value发生改变的情况下，监听器会发生响应
 		request.valueProperty().addListener((obs, oldImg, newImg) -> {
+			// 接受到的图片不为空
 			if (newImg != null) {
+				// 设置图片到视图变量当中
 				ImageView img = new ImageView(newImg);
 				setImg(img);
-				
+				// 获取图片的大小
 				double imgW = Double.valueOf(newImg.getWidth());
 				double imgH = Double.valueOf(newImg.getHeight());
-				
+				// 整体大小比图片的大小要大一点点
 				setWidth(imgW + 10);
 				setHeight(imgH + 10);
-				
-				if (imgH < imgW) { // 横向
+				// 当图片的宽度大于图片的高度，则说明图片是横向的
+				if (imgH < imgW) {
 					scale = imgH / imgW; // 宽高比
 					if (1600 < imgW || 820 < imgH) {
 						if (1600 < imgW || 3 < imgW / imgH) {
@@ -92,7 +99,7 @@ public class Img extends ViewImg {
 							}
 						}
 					}
-				} else { // 纵向
+				} else { // 当图片的宽度小于图片的高度，则说明图片是纵向的
 					scale = imgW / imgH; // 宽高比
 					if (1600 < imgW || 820 < imgH) {
 						if ((960 < imgH && 1200 < 960 * scale) || 3 < imgH / imgW) {
@@ -109,13 +116,16 @@ public class Img extends ViewImg {
 				Rectangle2D screen = Screen.getPrimary().getVisualBounds();
 				setX(screen.getMaxX() / 2 - getWidth() / 2);
 				setY(screen.getMaxY() / 2 - getHeight() / 2);
+				// 当图片接受完成之后，把进度条给移除掉
 				getMain().getChildren().remove(getPB());
+				// 同时图片的容器把提示文本给去掉，更换给图片进行演示
 				getImgBox().setBackground(Background.EMPTY);
 				getImgBox().setBorder(BorderX.EMPTY);
 				getImgBox().setCenter(img);
 				getImgBox().setEffect(dropshadow);
 			}
 		});
+		// 向服务器发送请求
 		request.start();
 	}
 	

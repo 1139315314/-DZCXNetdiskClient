@@ -43,6 +43,7 @@ public class ServerStateChart extends HBox {
 		final CategoryAxis xAxis = new CategoryAxis();
 		final NumberAxis yAxis;
 		yAxis = yMax == -1 ? new NumberAxis() : new NumberAxis(0, yMax, yMax);
+		// x轴和y轴都弄透明
 		xAxis.setOpacity(0);
 		xAxis.setTickLabelsVisible(false);
 		yAxis.setOpacity(0);
