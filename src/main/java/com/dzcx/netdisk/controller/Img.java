@@ -17,8 +17,10 @@ public class Img extends ViewImg {
 	private double ox = 0, oy = 0, cx = 0, cy = 0, scale = 1;
 
 	public Img(String path) {
+		// 先显示进度条
 		super(path);
-		
+
+		// 设置一下图片的边缘阴影
 		DropShadow dropshadow = new DropShadow();
 		dropshadow.setRadius(5);
 		dropshadow.setOffsetX(0);
@@ -26,7 +28,7 @@ public class Img extends ViewImg {
 		dropshadow.setSpread(.05);
 		dropshadow.setColor(Color.valueOf("#000000DD"));
 		
-		// 点击图像
+		// 点击图像，收集坐标信息，判断下一步的动作是什么
 		getMain().setOnMousePressed(event -> {
 			getMain().setCursor(Cursor.CLOSED_HAND);
 			ox = event.getX();
@@ -82,37 +84,9 @@ public class Img extends ViewImg {
 				// 获取图片的大小
 				double imgW = Double.valueOf(newImg.getWidth());
 				double imgH = Double.valueOf(newImg.getHeight());
-				// 整体大小比图片的大小要大一点点
+				// stage的整体大小比图片的大小要大一点点
 				setWidth(imgW + 10);
 				setHeight(imgH + 10);
-				// 当图片的宽度大于图片的高度，则说明图片是横向的
-				if (imgH < imgW) {
-					scale = imgH / imgW; // 宽高比
-					if (1600 < imgW || 820 < imgH) {
-						if (1600 < imgW || 3 < imgW / imgH) {
-							setWidth();
-						} else {
-							if (imgW < imgH) {
-								setHeight();
-							} else {
-								setWidth();
-							}
-						}
-					}
-				} else { // 当图片的宽度小于图片的高度，则说明图片是纵向的
-					scale = imgW / imgH; // 宽高比
-					if (1600 < imgW || 820 < imgH) {
-						if ((960 < imgH && 1200 < 960 * scale) || 3 < imgH / imgW) {
-							setWidth();
-						} else {
-							if (imgW < imgH) {
-								setHeight();
-							} else {
-								setWidth();
-							}
-						}
-					}
-				}
 				Rectangle2D screen = Screen.getPrimary().getVisualBounds();
 				setX(screen.getMaxX() / 2 - getWidth() / 2);
 				setY(screen.getMaxY() / 2 - getHeight() / 2);
@@ -128,18 +102,5 @@ public class Img extends ViewImg {
 		// 向服务器发送请求
 		request.start();
 	}
-	
-	private void setWidth() {
-		setWidth(1200 + 10);
-		setHeight(1200 * scale + 10);
-		getImg().setFitWidth(getWidth() - 10);
-		getImg().setFitHeight(getHeight() - 10);
-	}
-	
-	private void setHeight() {
-		setWidth(960 * scale + 10);
-		setHeight(960 + 10);
-		getImg().setFitWidth(getWidth() - 10);
-		getImg().setFitHeight(getHeight() - 10);
-	}
+
 }

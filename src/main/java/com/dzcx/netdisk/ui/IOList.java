@@ -44,7 +44,7 @@ public class IOList extends ListView<IOCell> {
 	public IOList(ObservableList<IOCell> rootList) {
 		super(rootList);
 		Background bgCancel = new Background(new BackgroundImage(
-			new Image("net/imyeyu/netdisk/res/cancel.png"),
+			new Image("photo/cancel.png"),
 			BackgroundRepeat.NO_REPEAT,
 			BackgroundRepeat.NO_REPEAT,
 			BackgroundPosition.CENTER,

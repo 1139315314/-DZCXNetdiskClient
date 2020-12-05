@@ -1,0 +1,151 @@
+package com.dzcx.netdisk.controller;
+
+import java.util.List;
+
+import com.dzcx.netdisk.Entrance;
+import com.dzcx.netdisk.core.Download;
+import com.dzcx.netdisk.core.Upload;
+import com.dzcx.netdisk.entity.*;
+import com.dzcx.netdisk.view.ViewIO;
+import javafx.beans.property.SimpleListProperty;
+import javafx.beans.property.SimpleStringProperty;
+import javafx.collections.ObservableList;
+
+
+public class IO extends ViewIO {
+	
+	private Upload upload;
+	private Download download;
+	
+	private String isUpload, isDownload;
+	private MyConfig config = Entrance.config;
+	private SimpleStringProperty show;
+
+	private ObservableList<IOCell> uploadList, downloadList;
+	private ObservableList<IOHistory> finishList;
+
+	public IO(Upload upload, Download download) {
+		this.upload = upload;
+		this.download = download;
+		
+		// 初始化
+		initUploadList();
+		initDownloadList();
+		initFinishList();
+		
+		// 上传
+		getUpload().setOnAction(event -> upload());
+		
+		// 下载
+		getDownload().setOnAction(event -> download());
+		
+		// 已完成
+		getFinish().setOnAction(event -> finish());
+		
+		// 清空记录
+		getClear().setOnAction(event -> {
+			getFinishList().getItems().clear();
+		});
+		
+		// 关闭
+		setOnCloseRequest(event -> close());
+	}
+	
+	public void close() {
+		getUploadList().setItems(null);
+		getDownloadList().setItems(null);
+		super.close();
+	}
+	
+	// 获取核心上传队列
+	private void initUploadList() {
+		IOCell cell;
+		uploadList = getUploadList().getItems();
+		SimpleListProperty<UploadFile> files = Upload.getListProperty();
+		for (int i = Upload.getIndex(); i < files.size(); i++) {
+			cell = new IOCell(files.get(i).getName(), files.get(i).getSize(), -1);
+			cell.setPath(files.get(i).getToPath());
+			cell.setLocal(false);
+			cell.setMaxSize(files.get(i).getSize());
+			uploadList.add(cell);
+		}
+		if (0 < uploadList.size()) bindUploadCore(uploadList.get(0));
+	}
+	
+	// 获取核心下载队列
+	private void initDownloadList() {
+		IOCell cell;
+		downloadList = getDownloadList().getItems();
+		SimpleListProperty<DownloadFile> files = Download.getListProperty();
+		for (int i = Download.getIndex(); i < files.size(); i++) {
+			cell = new IOCell(files.get(i).getName(), files.get(i).getSize(), -1);
+			cell.setPath(config.getDlLocation());
+			cell.setLocal(true);
+			cell.setMaxSize(files.get(i).getSize());
+			downloadList.add(cell);
+		}
+		if (0 < downloadList.size()) bindDownloadCore(downloadList.get(0));
+	}
+	
+	// 初始化完成列表
+	private void initFinishList() {
+		finishList = getFinishList().getItems();
+		loadFinishList();
+		show = getFinishList().getShow(); // 打开网盘文件夹
+	}
+	
+	// 加载完成列表
+	private void loadFinishList() {
+		finishList.clear();
+		List<IOHistory> ioHistories = Main.getIoHistories();
+		for (int i = ioHistories.size() - 1; -1 < i; i--) {
+			finishList.add(ioHistories.get(i));
+		}
+	}
+	
+	// 绑定上传核心
+	private void bindUploadCore(IOCell cell) {
+		upload.messageProperty().addListener((list, oldValue, newValue) -> {
+			if (!newValue.equals(isUpload)) { // 不明原因会被多次执行
+				if (uploadList.size() != 0) {
+					isUpload = newValue;
+					uploadList.remove(0);
+					getUploadList().refresh();
+					loadFinishList();
+					if (0 < uploadList.size()) bindUploadCore(uploadList.get(0));
+				}
+			}
+		});
+		upload.valueProperty().addListener((list, oldValue, newValue) -> {
+			cell.setSize(newValue.doubleValue());
+		});
+		upload.progressProperty().addListener((list, oldValue, newValue) -> {
+			cell.setPercent(newValue.doubleValue());
+		});
+	}
+	
+	// 绑定下载核心
+	private void bindDownloadCore(IOCell cell) {
+		download.messageProperty().addListener((list, oldValue, newValue) -> {
+			if (!newValue.equals(isDownload)) {
+				if (downloadList.size() != 0) {
+					isDownload = newValue;
+					downloadList.remove(0);
+					getDownloadList().refresh();
+					loadFinishList();
+					if (0 < downloadList.size()) bindDownloadCore(downloadList.get(0));
+				}
+			}
+		});
+		download.valueProperty().addListener((list, oldValue, newValue) -> {
+			cell.setSize(newValue.doubleValue());
+		});
+		download.progressProperty().addListener((list, oldValue, newValue) -> {
+			cell.setPercent(newValue.doubleValue());
+		});
+	}
+
+	public SimpleStringProperty getShow() {
+		return show;
+	}
+}

@@ -29,6 +29,7 @@ import com.dzcx.netdisk.ui.FileListTable;
 import com.dzcx.netdisk.ui.NavButton;
 import com.dzcx.netdisk.ui.SystemTrayX;
 import com.dzcx.netdisk.util.FileFormat;
+import com.dzcx.netdisk.util.IOHistoryLoader;
 import com.dzcx.netdisk.util.Interface.Tools;
 import com.dzcx.netdisk.util.iUtil;
 import com.dzcx.netdisk.util.implement.EncodeImp;
@@ -69,7 +70,7 @@ public class Main extends Application {
 	private NetSpeed speed;
 	private Download download;
 //	private StateRequest state;
-//	private IOHistoryLoader ioHistoryLoader = new IOHistoryLoader();
+	private IOHistoryLoader ioHistoryLoader = new IOHistoryLoader();
 	private static List<IOHistory> ioHistories;
 	
 	private int searchIndex = 0;
@@ -122,6 +123,11 @@ public class Main extends Application {
 		// 传输速度的监听
 		netSpeed();
 
+
+		// 下载文件
+		view.getDownload().setOnAction(event -> download());
+		view.getmDownload().setOnAction(event -> download());
+
 		// 双击文件列表，然后判断双击的是文件夹还是文件来进行对应的操作
 		fileList.setOnMouseClicked(event -> {
 			if (event.getButton().equals(MouseButton.PRIMARY) && event.getClickCount() == 2)
@@ -136,6 +142,47 @@ public class Main extends Application {
 
 
 
+
+
+	}
+
+	/**
+	 * 下载文件
+	 *
+	 */
+	private void download() {
+		ObservableList<FileCell> selected = fileList.getSelectionModel().getSelectedItems();
+		// 如果选择了对应的下载项
+		if (0 < selected.size()) {
+			for (int i = 0; i < selected.size(); i++) {
+				// 如果所选择的item包含文件夹
+				if (selected.get(i).getName().startsWith("folder")) {
+					new GUIImp().tips(tips, "选中对象存在文件夹，请压缩后再下载", 3000, TipsX.ERROR);
+					return;
+				}
+			}
+			download.add(selected, view.getPath().getText(), "");
+			new GUIImp().tips(tips, "已添加" + selected.size() + "个对象到下载队列", 3000, TipsX.WARNING);
+			if (Boolean.valueOf(config.getOpenIOList().toString()))
+				openIOList();
+		} else {
+			new GUIImp().tips(tips, "只能选择一个对象");
+		}
+	}
+
+	/**
+	 * 传输列表
+	 *
+	 */
+	private void openIOList() {
+		IO io = new IO(upload, download);
+		io.getShow().addListener((obs, oldValue, newValue) -> {
+			if (!newValue.equals("")) {
+				prevStack.push(view.getPath().getText());
+				getFileList(newValue);
+				io.close();
+			}
+		});
 	}
 
 	/**
@@ -176,18 +223,23 @@ public class Main extends Application {
 					new Img(view.getPath().getText() + fileName);
 					return;
 				}
-				// 视频播放Tomcat
+				// 视频播放  底层是使用Tomcat管理网盘
 				if (FileFormat.isMP4(format)) {
+					// 发送获取视频信息的请求，告诉服务器视频的路径在哪里
 					PublicRequest request = new PublicRequest("getMP4Info", view.getPath().getText() + fileName);
+					// 底下提示视频的信息正在获取中。
 					new GUIImp().tips(tips, "正在获取视频信息...", 3000, TipsX.WARNING);
+					// 监听多线程的message，多线程任务结束之后会返回视频的相关信息
 					request.messageProperty().addListener((tmp, o, n) -> {
 						JsonObject jo = (new JsonParser()).parse(n).getAsJsonObject();
+						// 封装视频的信息
 						VideoInfo video = new VideoInfo();
 						video.setName(fileName);
 						video.setUrl(view.getPath().getText() + fileName, config.getIp(), String.valueOf(config.getPortHTTP()));
 						video.setWidth(jo.get("width").getAsDouble());
 						video.setHeight(jo.get("height").getAsDouble());
 						video.setDeg(jo.get("deg").getAsInt());
+						// 开始播放视频
 						new Video(video, video.filter(fileList.getItems()), view.getPath().getText());
 					});
 					request.start();

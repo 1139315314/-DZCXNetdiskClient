@@ -27,18 +27,20 @@ import javafx.util.Duration;
 
 /**
  * 视频播放器
- * 
- * @author Yeyu
- *
  */
 public class Video extends ViewVideo {
 	
 	private MyConfig config = Entrance.config;
-	
+
+	// 当前播放的id，
 	private int playingID = -1;
+	// 用来处理从坐标转换的一些变量
 	private double ox = 0, oy = 0, cx = 0, cy = 0;
+	// 设置可否拖拽
 	private boolean isSeeking = false;
+	// 真正的播放器
 	private MediaPlayer player = null;
+	// 是否展示出导航界面
 	private SimpleBooleanProperty setShowCtrl = new SimpleBooleanProperty(true);
 
 	/**
@@ -50,22 +52,25 @@ public class Video extends ViewVideo {
 	 * @param path  当前云盘访问目录
 	 */
 	public Video(VideoInfo video, List<FileCell> list, String path) {
-		// 正在播放的视频在列表的位置
+		// 正在播放的视频在列表的位置，记录一下对应的位置。
 		for (int i = 0; i < list.size(); i++) {
 			if (list.get(i).getName().equals(video.getFileCellName())) {
+				// 记录对应的正在播放的视频
 				playingID = i;
 				break;
 			}
 		}
-		// 准备播放器
+		// 准备播放器，设置播放的内容
 		preparePlayer(video);
 		
-		// 显示界面
+		// 把播放器的界面显示出来
 		show();
 		
-		// 控件面板控制
+		// 控件面板控制，监听该属性，根据该属性来对控制面板设置透明还是不透明
 		setShowCtrl.addListener((tmp, o, n) -> {
+			// 判断是透明还是不透明
 			getCtrl().setOpacity(n ? 1 : 0);
+			// 设置鼠标的悬浮状态
 			getScene().getRoot().setCursor(n ? Cursor.DEFAULT : Cursor.NONE);
 		});
 		// 场景 - 点击
@@ -84,22 +89,27 @@ public class Video extends ViewVideo {
 		getScene().setOnMouseEntered(event -> setShowCtrl.set(true));
 		// 场景 - 移出
 		getScene().setOnMouseExited(event -> setShowCtrl.set(false));
-		// 快捷键
+		// 快捷键，
 		getScene().setOnKeyReleased(event -> {
 			switch (event.getCode()) {
 				case SPACE:
+					// 空格，则更换播放状态
 					togglePlay();
 					break;
 				case UP:
+					// 上键，上调音量
 					getVolume().setValue(getVolume().getValue() + .1);
 					break;
 				case DOWN:
+					// 下键，下调音量
 					getVolume().setValue(getVolume().getValue() - .1);
 					break;
 				case LEFT:
+					// 左键，调整播放进度
 					player.seek(Duration.seconds(getPb().getValue() - 10));
 					break;
 				case RIGHT:
+					// 左键，调整播放进度
 					player.seek(Duration.seconds(getPb().getValue() + 10));
 					break;
 				default:
@@ -196,10 +206,12 @@ public class Video extends ViewVideo {
 		} else { // 纵向
 			Rotate rotate = new Rotate(video.getDeg(), 260, 260);
 			getMediaView().getTransforms().add(rotate);
+			// 设置大小
 			getMediaView().setFitHeight(960);
 			setWidth(video.getWidth() * (980 / video.getHeight()));
 			setHeight(966);
 		}
+
 		// 窗体缩放
 		ZoomUtil.addDragEvent(this, getScene().getRoot(), getWidth(), getHeight());
 		// 提示区尺寸
@@ -207,7 +219,8 @@ public class Video extends ViewVideo {
 		new GUIImp().tips(getTips(), "正在加载：" + video.getUrl());
 		
 		// 开始加载视频
-		if (player != null) player.dispose();
+		if (player != null)
+			player.dispose();
 		setTitle(video.getName());
 		try {
 			setVideoTitle(video.getName());

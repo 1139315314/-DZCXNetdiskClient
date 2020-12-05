@@ -38,7 +38,7 @@ public class Upload extends Service<Double> {
 	private OutputStream os;
 	private static int iUpload = 0; // 正在传输的下标
 	private MyConfig config = Entrance.config;
-	private String ip, token; int port;
+	private String ip; int port;
 	private double transpeed = 0;
 	private boolean isUploading = false;
 	private AudioClip ac;
