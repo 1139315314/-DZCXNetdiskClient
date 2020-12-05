@@ -46,9 +46,9 @@ public class IOFinishList extends ListView<IOHistory> {
 							
 							file = new HBox();
 							if (item.isLocal()) {
-								ioIcon = new ImageView("net/imyeyu/netdisk/res/download.png");
+								ioIcon = new ImageView("photo/download.png");
 							} else {
-								ioIcon = new ImageView("net/imyeyu/netdisk/res/upload.png");
+								ioIcon = new ImageView("photo/upload.png");
 							}
 							icon = new ImageView(FileFormat.getImage(item.getName().substring(item.getName().lastIndexOf(".") + 1)));
 							name = new Label(item.getName());

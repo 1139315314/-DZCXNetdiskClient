@@ -93,7 +93,7 @@ public class ImgRequest extends Service<Image> {
 						is = socket.getInputStream();
 						// 先把服务器发送过来的数据保存到一个缓冲区当中
 						ByteArrayOutputStream cloneBAOS = new ByteArrayOutputStream();
-						byte[] buffer = new byte[2];//[4096];
+						byte[] buffer = new byte[4096];
 						int l = 0;
 						double progress = 0;
 						while ((l = is.read(buffer)) > -1) {

@@ -49,7 +49,7 @@ public class ViewMain extends Stage {
 	/////
 	double c;
 	double d;
-	
+
 	public ViewMain() {
 		Stage stage = this;
 
@@ -126,6 +126,7 @@ public class ViewMain extends Stage {
 		exit.setOnMouseClicked(new EventHandler<MouseEvent>() {
 			@Override
 			public void handle(MouseEvent event) {
+
 				System.exit(0);
 			}
 		});
@@ -263,6 +264,10 @@ public class ViewMain extends Stage {
 
 		
 		fileList.requestFocus();
+	}
+
+	public void setExit(Button exit) {
+		this.exit = exit;
 	}
 
 	public Button getOpen() {

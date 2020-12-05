@@ -123,6 +123,8 @@ public class Main extends Application {
 		// 传输速度的监听
 		netSpeed();
 
+		// 读取已完成传输列表
+		ioHistories = ioHistoryLoader.get();
 
 		// 下载文件
 		view.getDownload().setOnAction(event -> download());
@@ -138,6 +140,11 @@ public class Main extends Application {
 		view.getRoot().setOnAction(event -> {
 			view.getPath().setText("\\");
 			getFileList(view.getPath().getText());
+		});
+
+		view.getExit().setOnAction(event -> {
+			ioHistoryLoader.set();
+			System.exit(0);
 		});
 
 

@@ -39,7 +39,7 @@ public class ViewIO extends Stage {
 		finish = new NavButton("已完成列表", 100, 32);
 
 		nav.setBorder(new BorderX("#B5B5B5", BorderX.SOLID, 1).bottom());
-		nav.getChildren().addAll(upload, download, finish);
+		nav.getChildren().addAll(download, upload, finish);
 		
 		clear = new NavButton("清除所有", 100, 26);
 		clear.setPadding(new Insets(0, 0, 4, 0));
@@ -67,7 +67,8 @@ public class ViewIO extends Stage {
 		
 		// 已完成列表
 		finishList = new IOFinishList();
-		
+
+
 		main = new BorderPane();
 		main.setId("main");
 		main.setBorder(new BorderX("#B5B5B5", BorderX.SOLID, 1).top());

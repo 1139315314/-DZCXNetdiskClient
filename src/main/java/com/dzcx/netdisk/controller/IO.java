@@ -32,6 +32,8 @@ public class IO extends ViewIO {
 		initUploadList();
 		initDownloadList();
 		initFinishList();
+
+		download();
 		
 		// 上传
 		getUpload().setOnAction(event -> upload());
@@ -46,6 +48,7 @@ public class IO extends ViewIO {
 		getClear().setOnAction(event -> {
 			getFinishList().getItems().clear();
 		});
+
 		
 		// 关闭
 		setOnCloseRequest(event -> close());
